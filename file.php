@@ -12,11 +12,6 @@ class Container
 {
     private $services = [];
 
-    public function __construct()
-    {
-
-    }
-
     public function loadServices($services)
     {
         $this->services = $services;
