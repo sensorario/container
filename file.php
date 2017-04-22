@@ -10,14 +10,19 @@ class Due
 
 class Container
 {
+    private $services;
+
+    public function __construct()
+    {
+        $this->services = [];
+
+        $this->services['servizio'] = 'Servizio';
+        $this->services['servizio.due'] = 'Due';
+    }
+
     public function get($serviceName)
     {
-        $services = [];
-
-        $services['servizio'] = 'Servizio';
-        $services['servizio.due'] = 'Due';
-
-        $className = $services[$serviceName];
+        $className = $this->services[$serviceName];
 
         return new $className();
     }
