@@ -17,10 +17,9 @@ class Container
 
     }
 
-    public function loadServices()
+    public function loadServices($services)
     {
-        $this->services['servizio'] = 'Servizio';
-        $this->services['servizio.due'] = 'Due';
+        $this->services = $services;
     }
 
     public function get($serviceName)
@@ -32,7 +31,11 @@ class Container
 }
 
 $container = new Container();
-$container->loadServices();
+
+$services['servizio'] = 'Servizio';
+$services['servizio.due'] = 'Due';
+
+$container->loadServices($services);
 
 $servizio = $container->get('servizio');
 
