@@ -1,5 +1,14 @@
 <?php
 
+class Tre
+{
+    public function __construct(
+        Servizio $servizio,
+        Due $due
+    ) {
+    }
+}
+
 class Servizio
 {
     private $due;
@@ -30,7 +39,17 @@ class Container
         $arguments = [];
         if (isset($this->services[$serviceName]['params'])) {
             $params = $this->services[$serviceName]['params'];
-            return new $className($this->get($params[0]));
+
+            if (count($params) == 1) {
+                return new $className($this->get($params[0]));
+            }
+
+            if (count($params) == 2) {
+                return new $className(
+                    $this->get($params[0]),
+                    $this->get($params[1])
+                );
+            }
         }
 
         return new $className($arguments);
@@ -49,6 +68,13 @@ $container->loadServices([
     'servizio.due' => [
         'class' => 'Due',
     ],
+    'servizio.tre' => [
+        'class' => 'Tre',
+        'params' => [
+            'servizio',
+            'servizio.due'
+        ]
+    ],
 ]);
 
 $servizio = $container->get('servizio');
@@ -62,6 +88,14 @@ if (!($servizio instanceof Servizio)) {
 $due = $container->get('servizio.due');
 
 if (!($due instanceof Due)) {
+    throw new \RuntimeException(
+        'Oops! Non sono Due'
+    );
+}
+
+$tre = $container->get('servizio.tre');
+
+if (!($tre instanceof Tre)) {
     throw new \RuntimeException(
         'Oops! Non sono Due'
     );
