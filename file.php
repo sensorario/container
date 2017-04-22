@@ -13,11 +13,13 @@ class Container
     public function get($serviceName)
     {
         if ($serviceName == 'servizio') {
-            return new Servizio();
+            $className = 'Servizio';
+            return new $className();
         }
 
         if ($serviceName == 'servizio.due') {
-            return new Due();
+            $className = 'Due';
+            return new $className();
         }
     }
 }
