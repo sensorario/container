@@ -10,12 +10,10 @@ class Due
 
 class Container
 {
-    private $services;
+    private $services = [];
 
     public function __construct()
     {
-        $this->services = [];
-
         $this->services['servizio'] = 'Servizio';
         $this->services['servizio.due'] = 'Due';
     }
