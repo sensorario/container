@@ -14,6 +14,11 @@ class Container
 
     public function __construct()
     {
+
+    }
+
+    public function loadServices()
+    {
         $this->services['servizio'] = 'Servizio';
         $this->services['servizio.due'] = 'Due';
     }
@@ -27,6 +32,7 @@ class Container
 }
 
 $container = new Container();
+$container->loadServices();
 
 $servizio = $container->get('servizio');
 
