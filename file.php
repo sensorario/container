@@ -14,13 +14,13 @@ class Container
     {
         if ($serviceName == 'servizio') {
             $className = 'Servizio';
-            return new $className();
         }
 
         if ($serviceName == 'servizio.due') {
             $className = 'Due';
-            return new $className();
         }
+
+        return new $className();
     }
 }
 
