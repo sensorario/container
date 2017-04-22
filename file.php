@@ -2,6 +2,12 @@
 
 class Servizio
 {
+    private $due;
+
+    public function __construct(Due $due)
+    {
+        $this->due = $due;
+    }
 }
 
 class Due
@@ -21,7 +27,13 @@ class Container
     {
         $className = $this->services[$serviceName]['class'];
 
-        return new $className();
+        $arguments = [];
+        if (isset($this->services[$serviceName]['params'])) {
+            $params = $this->services[$serviceName]['params'];
+            return new $className($this->get($params[0]));
+        }
+
+        return new $className($arguments);
     }
 }
 
@@ -30,6 +42,9 @@ $container = new Container();
 $container->loadServices([
     'servizio' => [
         'class' => 'Servizio',
+        'params' => [
+            'servizio.due'
+        ]
     ],
     'servizio.due' => [
         'class' => 'Due',
