@@ -27,10 +27,10 @@ class Container
 
 $container = new Container();
 
-$services['servizio'] = 'Servizio';
-$services['servizio.due'] = 'Due';
-
-$container->loadServices($services);
+$container->loadServices([
+    'servizio' => 'Servizio',
+    'servizio.due' => 'Due',
+]);
 
 $servizio = $container->get('servizio');
 
