@@ -19,7 +19,7 @@ class Container
 
     public function get($serviceName)
     {
-        $className = $this->services[$serviceName];
+        $className = $this->services[$serviceName]['class'];
 
         return new $className();
     }
@@ -28,8 +28,12 @@ class Container
 $container = new Container();
 
 $container->loadServices([
-    'servizio' => 'Servizio',
-    'servizio.due' => 'Due',
+    'servizio' => [
+        'class' => 'Servizio',
+    ],
+    'servizio.due' => [
+        'class' => 'Due',
+    ],
 ]);
 
 $servizio = $container->get('servizio');
