@@ -12,13 +12,12 @@ class Container
 {
     public function get($serviceName)
     {
-        if ($serviceName == 'servizio') {
-            $className = 'Servizio';
-        }
+        $services = [];
 
-        if ($serviceName == 'servizio.due') {
-            $className = 'Due';
-        }
+        $services['servizio'] = 'Servizio';
+        $services['servizio.due'] = 'Due';
+
+        $className = $services[$serviceName];
 
         return new $className();
     }
