@@ -1,25 +1,25 @@
 <?php
 
-class Tre
+class FooService
 {
     public function __construct(
-        Servizio $servizio,
-        Due $due
+        BarService $servizio,
+        EmptyService $due
     ) {
     }
 }
 
-class Servizio
+class BarService
 {
     private $due;
 
-    public function __construct(Due $due)
+    public function __construct(EmptyService $due)
     {
         $this->due = $due;
     }
 }
 
-class Due
+class EmptyService
 {
 }
 
@@ -60,16 +60,16 @@ $container = new Container();
 
 $container->loadServices([
     'servizio' => [
-        'class' => 'Servizio',
+        'class' => 'BarService',
         'params' => [
             'servizio.due'
         ]
     ],
     'servizio.due' => [
-        'class' => 'Due',
+        'class' => 'EmptyService',
     ],
     'servizio.tre' => [
-        'class' => 'Tre',
+        'class' => 'FooService',
         'params' => [
             'servizio',
             'servizio.due'
@@ -79,7 +79,7 @@ $container->loadServices([
 
 $servizio = $container->get('servizio');
 
-if (!($servizio instanceof Servizio)) {
+if (!($servizio instanceof BarService)) {
     throw new \RuntimeException(
         'Oops!'
     );
@@ -87,16 +87,16 @@ if (!($servizio instanceof Servizio)) {
 
 $due = $container->get('servizio.due');
 
-if (!($due instanceof Due)) {
+if (!($due instanceof EmptyService)) {
     throw new \RuntimeException(
-        'Oops! Non sono Due'
+        'Oops! Non sono EmptyService'
     );
 }
 
 $tre = $container->get('servizio.tre');
 
-if (!($tre instanceof Tre)) {
+if (!($tre instanceof FooService)) {
     throw new \RuntimeException(
-        'Oops! Non sono Due'
+        'Oops! Non sono EmptyService'
     );
 }
