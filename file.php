@@ -6,6 +6,7 @@ class FooService
         BarService $servizio,
         EmptyService $due
     ) {
+
     }
 }
 
@@ -27,6 +28,16 @@ class Container
 {
     private $services = [];
 
+    private $builder;
+
+    public function __construct(
+        ArgumentBuilder $builder
+    ) {
+        $this->builder = $builder;
+
+        $this->builder->setContainer($this);
+    }
+
     public function loadServices($services)
     {
         $this->services = $services;
@@ -34,29 +45,56 @@ class Container
 
     public function get($serviceName)
     {
-        $className = $this->services[$serviceName]['class'];
+        $serviceClass = $this->services[$serviceName]['class'];
 
-        $arguments = [];
-        if (isset($this->services[$serviceName]['params'])) {
-            $params = $this->services[$serviceName]['params'];
-
-            if (count($params) == 1) {
-                return new $className($this->get($params[0]));
-            }
-
-            if (count($params) == 2) {
-                return new $className(
-                    $this->get($params[0]),
-                    $this->get($params[1])
-                );
-            }
+        if (!isset($this->services[$serviceName]['params'])) {
+            return new $serviceClass();
         }
 
-        return new $className($arguments);
+        $params = $this->services[$serviceName]['params'];
+
+        $arguments = $this->builder
+            ->setParams($params)
+            ->getArguments();
+
+        return (new ReflectionClass($serviceClass))
+            ->newInstanceArgs($arguments);
     }
 }
 
-$container = new Container();
+class ArgumentBuilder
+{
+    private $container;
+
+    private $params;
+
+    public function setContainer($container)
+    {
+        $this->container = $container;
+    }
+
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+
+        return $this;
+    }
+
+    public function getArguments()
+    {
+        $arguments = [];
+
+        foreach ($this->params as $instanceParam) {
+            $arguments[] = $this->container->get($instanceParam);
+        }
+
+        return $arguments;
+    }
+}
+
+$container = new Container(
+    new ArgumentBuilder()
+);
 
 $container->loadServices([
     'servizio' => [
