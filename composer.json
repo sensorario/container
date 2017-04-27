@@ -1,0 +1,23 @@
+{
+    "name": "sensorario/container",
+    "description": "A Dependency Injection Container",
+    "type": "project",
+    "license": "MIT",
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "": ["src/", "resources/"]
+        }
+    },
+    "authors": [
+        {
+            "name": "Simone Gentili",
+            "email": "sensorario@gmail.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^6.1"
+    }
+}
