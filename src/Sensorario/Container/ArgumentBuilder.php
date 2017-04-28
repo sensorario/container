@@ -35,8 +35,8 @@ class ArgumentBuilder
             );
         }
 
-        foreach ($this->params as $instanceParam) {
-            $arguments[] = $this->container->get($instanceParam);
+        foreach ($this->params as $argument) {
+            $arguments[] = $this->container->get($argument);
         }
 
         return $arguments;
