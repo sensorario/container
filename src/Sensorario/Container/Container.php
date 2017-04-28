@@ -30,7 +30,7 @@ class Container
 
     public function get($serviceName)
     {
-        if (!isset($this->services[$serviceName])) {
+        if (!$this->contains($serviceName)) {
             throw new \RuntimeException(
                 'Oops! Service not defined'
             );
@@ -56,5 +56,15 @@ class Container
 
         return (new ReflectionClass($serviceClass))
             ->newInstanceArgs($arguments);
+    }
+
+    public function contains($serviceName)
+    {
+        return isset($this->services[$serviceName]);
+    }
+
+    public function hasArguments($serviceName)
+    {
+        return isset($this->services[$serviceName]['params']);
     }
 }

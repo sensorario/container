@@ -1,5 +1,4 @@
 <?php
-
 use PHPUnit\Framework\TestCase;
 use Sensorario\Container\Container;
 
@@ -12,6 +11,28 @@ class ContainerTest extends TestCase
         $this->assertEquals(
             [],
             $container->getServicesConfiguration()
+        );
+    }
+
+    public function testHasMethodToCheckIfHasService()
+    {
+        $container = new Container();
+        $container->loadServices([]);
+
+        $this->assertSame(
+            false,
+            $container->contains('service-name')
+        );
+    }
+
+    public function testCheckIfAServiceConstructorHasArguments()
+    {
+        $container = new Container();
+        $container->loadServices([]);
+
+        $this->assertSame(
+            false,
+            $container->hasArguments('service-name')
         );
     }
 
