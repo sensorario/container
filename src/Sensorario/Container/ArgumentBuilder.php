@@ -36,7 +36,10 @@ class ArgumentBuilder
         }
 
         foreach ($this->params as $argument) {
-            $arguments[] = $this->container->get($argument);
+            $argumentObj = Objects\Argument::fromString($argument);
+            if ($argumentObj->isService()) {
+                $arguments[] = $this->container->get($argument);
+            }
         }
 
         return $arguments;
