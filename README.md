@@ -7,48 +7,16 @@ src/
 └── Sensorario
     └── Container
         ├── ArgumentBuilder.php
-        └── Container.php
+        ├── Container.php
+        └── Objects
+            └── Argument.php
 
-2 directories, 2 files
+3 directories, 3 files
 ```
 
-## Usage
+## Docs
 
-```php
-use Sensorario\Container\Container;
-use Sensorario\Container\ArgumentBuilder;
+ - [Basic usage][1]
 
-class Hello
-{
-    private $now;
+ [1]: doc/basic-usage.md
 
-    public function __construct(
-        \DateTime $now
-    ) {
-        $this->now = $now;
-    }
-
-    public function getNow()
-    {
-        return $this->now;
-    }
-}
-
-$container = new Container();
-$container->setArgumentBuilder(new ArgumentBuilder());
-$container->loadServices([
-    'now' => [
-        'class' => 'DateTime',
-    ],
-    'ciao' => [
-        'class' => 'Hello',
-        'params' => [
-            'now',
-        ]
-    ],
-]);
-
-$now = $container->get('ciao');
-
-$now->getNow();
-```

@@ -43,11 +43,11 @@ class ArgumentBuilderTest extends TestCase
 
         $this->container->expects($this->once())
             ->method('get')
-            ->with('Foo\Bar')
+            ->with('@foo')
             ->will($this->returnValue($this->fooClass));
 
         $builder = new ArgumentBuilder();
-        $builder->setParams(['Foo\Bar']);
+        $builder->setParams(['@foo']);
         $builder->setContainer($this->container);
 
         $this->assertEquals(

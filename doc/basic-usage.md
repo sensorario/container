@@ -1,11 +1,10 @@
-<?php
+## Usage
 
-require __DIR__ . '/../vendor/autoload.php';
-
+```php
 use Sensorario\Container\Container;
 use Sensorario\Container\ArgumentBuilder;
 
-class Ciao
+class Hello
 {
     private $now;
 
@@ -28,24 +27,14 @@ $container->loadServices([
         'class' => 'DateTime',
     ],
     'ciao' => [
-        'class' => 'Ciao',
+        'class' => 'Hello',
         'params' => [
             '@now',
         ]
     ],
-    // 'servizio.due' => [
-    //     'class' => 'EmptyService',
-    // ],
-    // 'servizio.tre' => [
-    //     'class' => 'FooService',
-    //     'params' => [
-    //         'servizio',
-    //         'servizio.due'
-    //     ]
-    // ],
 ]);
 
 $now = $container->get('ciao');
 
-var_dump($now);
-var_dump($now->getNow());
+$now->getNow();
+```
