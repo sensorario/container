@@ -19,7 +19,7 @@ class ArgumentTest extends TestCase
         $argument = Argument::fromString('foo');
         $this->assertEquals(
             false,
-            $argument->containsChiocciola()
+            $argument->isService()
         );
     }
 
@@ -28,7 +28,7 @@ class ArgumentTest extends TestCase
         $argument = Argument::fromString('@foo');
         $this->assertEquals(
             true,
-            $argument->containsChiocciola()
+            $argument->isService()
         );
     }
 
