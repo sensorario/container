@@ -13,8 +13,6 @@ class Container
     public function setArgumentBuilder(ArgumentBuilder $builder)
     {
         $this->builder = $builder;
-
-        /** @todo this is not covered */
         $this->builder->setContainer($this);
     }
 
@@ -28,13 +26,18 @@ class Container
         return $this->services;
     }
 
-    public function get(string $serviceName)
+    private function ensureServiceIsDefined($serviceName)
     {
         if (!$this->contains($serviceName)) {
             throw new \RuntimeException(
                 'Oops! Service ' . $serviceName . ' not defined'
             );
         }
+    }
+
+    public function get(string $serviceName)
+    {
+        $this->ensureServiceIsDefined($serviceName);
 
         $argument = Objects\Argument::fromString($serviceName);
         $serviceName = $argument->getServiceName();
@@ -59,15 +62,14 @@ class Container
             );
         }
 
-        $params = $this->services[$serviceName]['params'];
+        $this->builder->setParams(
+            $this->services[$serviceName]['params']
+        );
 
-        $this->builder->setParams($params);
-
-        $arguments = $this->builder->getArguments();
-
-        $refClass = new ReflectionClass($serviceClass);
-
-        return $refClass->newInstanceArgs($arguments);
+        return (new ReflectionClass($serviceClass))
+            ->newInstanceArgs(
+                $this->builder->getArguments()
+            );
     }
 
     public function contains(string $serviceName)

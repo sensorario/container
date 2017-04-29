@@ -6,12 +6,7 @@ class ArgumentBuilder
 {
     private $container;
 
-    private $params;
-
-    public function __construct()
-    {
-        $this->params = [];
-    }
+    private $params = [];
 
     public function setContainer($container)
     {
@@ -21,8 +16,6 @@ class ArgumentBuilder
     public function setParams(array $params)
     {
         $this->params = $params;
-
-        return $this;
     }
 
     public function getArguments()
@@ -35,14 +28,12 @@ class ArgumentBuilder
             );
         }
 
-        foreach ($this->params as $argument) {
-            $argumentObj = Objects\Argument::fromString($argument);
+        foreach ($this->params as $param) {
+            $parameter = Objects\Argument::fromString($param);
 
-            if ($argumentObj->isService()) {
-                $arguments[] = $this->container->get($argument);
-            } else {
-                $arguments[] = $argument;
-            }
+            $arguments[] = $parameter->isService()
+                ? $this->container->get($param)
+                : $param;
         }
 
         return $arguments;
