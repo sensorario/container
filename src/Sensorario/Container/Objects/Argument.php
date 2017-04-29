@@ -21,11 +21,6 @@ class Argument
         return 0 === strpos($this->name, '@');
     }
 
-    public function isScalar()
-    {
-        return false;
-    }
-
     public function getServiceName()
     {
         if ($this->isService()) {
