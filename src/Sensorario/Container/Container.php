@@ -72,12 +72,17 @@ class Container
 
         $this->builder->setParams($service->getParams());
 
+        $this->resolve($service);
+
+        return $this->instances[$service->getName()];
+    }
+
+    private function resolve($service)
+    {
         if (!isset($this->instances[$service->getName()])) {
             $this->instances[$service->getName()] = (new ReflectionClass($service->getClass()))
                 ->newInstanceArgs($this->builder->getArguments());
         }
-
-        return $this->instances[$service->getName()];
     }
 
     public function contains(string $serviceName)
