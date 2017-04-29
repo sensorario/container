@@ -55,7 +55,7 @@ class Container
             'services' => $this->services,
         ]);
 
-        if ($service->isConstructorEmpy()) {
+        if ($service->isConstructorEmpty()) {
             if ($service->classNotExists()) {
                 throw new \RuntimeException(
                     'Oops! Class ' . $service->getClass() .

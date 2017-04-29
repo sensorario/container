@@ -33,7 +33,7 @@ class Service
         return $this->params['name'];
     }
 
-    public function isConstructorEmpy()
+    public function isConstructorEmpty()
     {
         return [] == $this->getParams();
     }
