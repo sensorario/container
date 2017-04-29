@@ -2,6 +2,14 @@
     "name": "sensorario/container",
     "description": "A Dependency Injection Container",
     "type": "project",
+    "authors": [
+        {
+            "name": "Simone Gentili",
+            "email": "sensorario@gmail.com",
+            "homepage": "http://sensorario.github.io",
+            "role": "Developer"
+        }
+    ],
     "license": "MIT",
     "autoload": {
         "psr-4": {
