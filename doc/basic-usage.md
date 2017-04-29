@@ -56,7 +56,7 @@ $container->loadServices([
 
 $now = $container->get('ciao');
 
-$now->getNow();
-$now->getFoo();
-$now->getCiao();
+echo "\n" . $now->getNow()->format('Y-m-d'); // 2017-04-29
+echo "\n" . $now->getFoo();                  // bar
+echo "\n" . $now->getCiao();                 // 42
 ```

@@ -57,7 +57,6 @@ $container->loadServices([
 
 $now = $container->get('ciao');
 
-var_dump($now);
-var_dump($now->getNow());
-var_dump($now->getFoo());
-var_dump($now->getCiao());
+echo "\n" . $now->getNow()->format('Y-m-d');
+echo "\n" . $now->getFoo();
+echo "\n" . $now->getCiao();
