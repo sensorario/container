@@ -10,6 +10,8 @@ class Container
 
     private $builder;
 
+    private $instances = [];
+
     public function setArgumentBuilder(ArgumentBuilder $builder)
     {
         $this->builder = $builder;
@@ -70,8 +72,12 @@ class Container
 
         $this->builder->setParams($service->getParams());
 
-        return (new ReflectionClass($service->getClass()))
-            ->newInstanceArgs($this->builder->getArguments());
+        if (!isset($this->instances[$service->getName()])) {
+            $this->instances[$service->getName()] = (new ReflectionClass($service->getClass()))
+                ->newInstanceArgs($this->builder->getArguments());
+        }
+
+        return $this->instances[$service->getName()];
     }
 
     public function contains(string $serviceName)

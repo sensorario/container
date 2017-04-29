@@ -107,4 +107,31 @@ class ContainerTest extends TestCase
             get_class($container->get('service'))
         );
     }
+
+    public function testOnlyInstance()
+    {
+        $container = new Container();
+        $container->setArgumentBuilder(new ArgumentBuilder());
+        $container->loadServices([
+            'foo' => [
+                'class' => 'DateTime',
+            ],
+            'service' => [
+                'class' => 'Resources\Ciaone',
+                'params' => [
+                    '@foo',
+                    'foo' => 'bar',
+                    42
+                ]
+            ]
+        ]);
+
+        $firstCall = $container->get('service');
+        $secondCall = $container->get('service');
+
+        $this->assertSame(
+            $firstCall,
+            $secondCall
+        );
+    }
 }
