@@ -26,3 +26,9 @@ echo "\n" . $now->getNow()->format('Y-m-d'); // 2017-04-29
 echo "\n" . $now->getFoo();                  // bar
 echo "\n" . $now->getCiao();                 // 42
 ```
+
+## Links
+
+ - [DummyService][1]'s class
+
+ [1]: ../tests/resources/DummyService.php
