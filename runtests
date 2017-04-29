@@ -1,2 +1,2 @@
 #!/bin/bash
-./bin/phpunit --stop-on-failure --color
+./vendor/bin/phpunit --stop-on-failure --color
