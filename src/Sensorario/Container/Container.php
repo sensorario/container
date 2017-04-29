@@ -28,17 +28,28 @@ class Container
         return $this->services;
     }
 
-    public function get($serviceName)
+    public function get(string $serviceName)
     {
         if (!$this->contains($serviceName)) {
             throw new \RuntimeException(
-                'Oops! Service not defined'
+                'Oops! Service ' . $serviceName . ' not defined'
             );
         }
+
+        $argument = Objects\Argument::fromString($serviceName);
+        $serviceName = $argument->getServiceName();
 
         $serviceClass = $this->services[$serviceName]['class'];
 
         if (!isset($this->services[$serviceName]['params'])) {
+            if (!class_exists($serviceClass)) {
+                throw new \RuntimeException(
+                    'Oops! Class ' . $serviceClass .
+                    ' defined as ' . $serviceName .
+                    ' not exists in ' . var_export($this->services, true)
+                );
+            }
+
             return new $serviceClass();
         }
 
@@ -54,13 +65,15 @@ class Container
 
         $arguments = $this->builder->getArguments();
 
-        return (new ReflectionClass($serviceClass))
-            ->newInstanceArgs($arguments);
+        $refClass = new ReflectionClass($serviceClass);
+
+        return $refClass->newInstanceArgs($arguments);
     }
 
-    public function contains($serviceName)
+    public function contains(string $serviceName)
     {
-        return isset($this->services[$serviceName]);
+        $service = Objects\Argument::fromString($serviceName);
+        return isset($this->services[$service->getServiceName()]);
     }
 
     public function hasArguments($serviceName)

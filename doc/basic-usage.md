@@ -4,19 +4,37 @@
 use Sensorario\Container\Container;
 use Sensorario\Container\ArgumentBuilder;
 
-class Hello
+class DummyService
 {
     private $now;
 
+    private $foo;
+
+    private $ciao;
+
     public function __construct(
-        \DateTime $now
+        \DateTime $now,
+        string $foo,
+        int $ciao
     ) {
         $this->now = $now;
+        $this->foo = $foo;
+        $this->ciao = $ciao;
     }
 
     public function getNow()
     {
         return $this->now;
+    }
+
+    public function getFoo()
+    {
+        return $this->foo;
+    }
+
+    public function getCiao()
+    {
+        return $this->ciao;
     }
 }
 
@@ -27,9 +45,11 @@ $container->loadServices([
         'class' => 'DateTime',
     ],
     'ciao' => [
-        'class' => 'Hello',
+        'class' => 'DummyService',
         'params' => [
-            '@now',
+            '@now', // service
+            'foo' => 'bar', // scalar
+            42, // scalar
         ]
     ],
 ]);
@@ -37,4 +57,6 @@ $container->loadServices([
 $now = $container->get('ciao');
 
 $now->getNow();
+$now->getFoo();
+$now->getCiao();
 ```

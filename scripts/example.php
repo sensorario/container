@@ -5,19 +5,37 @@ require __DIR__ . '/../vendor/autoload.php';
 use Sensorario\Container\Container;
 use Sensorario\Container\ArgumentBuilder;
 
-class Ciao
+class DummyService
 {
     private $now;
 
+    private $foo;
+
+    private $ciao;
+
     public function __construct(
-        \DateTime $now
+        \DateTime $now,
+        string $foo,
+        int $ciao
     ) {
         $this->now = $now;
+        $this->foo = $foo;
+        $this->ciao = $ciao;
     }
 
     public function getNow()
     {
         return $this->now;
+    }
+
+    public function getFoo()
+    {
+        return $this->foo;
+    }
+
+    public function getCiao()
+    {
+        return $this->ciao;
     }
 }
 
@@ -28,24 +46,18 @@ $container->loadServices([
         'class' => 'DateTime',
     ],
     'ciao' => [
-        'class' => 'Ciao',
+        'class' => 'DummyService',
         'params' => [
-            '@now',
+            '@now', // service
+            'foo' => 'bar', // scalar
+            42, // scalar
         ]
     ],
-    // 'servizio.due' => [
-    //     'class' => 'EmptyService',
-    // ],
-    // 'servizio.tre' => [
-    //     'class' => 'FooService',
-    //     'params' => [
-    //         'servizio',
-    //         'servizio.due'
-    //     ]
-    // ],
 ]);
 
 $now = $container->get('ciao');
 
 var_dump($now);
 var_dump($now->getNow());
+var_dump($now->getFoo());
+var_dump($now->getCiao());

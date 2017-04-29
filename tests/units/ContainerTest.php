@@ -1,5 +1,7 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
+use Sensorario\Container\ArgumentBuilder;
 use Sensorario\Container\Container;
 
 class ContainerTest extends TestCase
@@ -38,7 +40,7 @@ class ContainerTest extends TestCase
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Oops! Service not defined
+     * @expectedExceptionMessage Oops! Service foo not defined
      */
     public function testThrowAnExceptionWhenRequestedServiceIsNotDefined()
     {
@@ -46,7 +48,7 @@ class ContainerTest extends TestCase
         $container->get('foo');
     }
 
-    public function testFooooooo()
+    public function testProvideServiceInstance()
     {
         $container = new Container();
         $container->loadServices([
@@ -64,7 +66,7 @@ class ContainerTest extends TestCase
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Oops! No builder, no party
      */
-    public function testBaaaaaaaar()
+    public function testCantBuildConstructorWithoutBuilder()
     {
         $container = new Container();
         $container->loadServices([
@@ -78,6 +80,30 @@ class ContainerTest extends TestCase
         ]);
         $this->assertEquals(
             'Foo\Bar',
+            get_class($container->get('service'))
+        );
+    }
+
+    public function testBuildServicesWithCollaboratorsAndScalarTypes()
+    {
+        $container = new Container();
+        $container->setArgumentBuilder(new ArgumentBuilder());
+        $container->loadServices([
+            'foo' => [
+                'class' => 'DateTime',
+            ],
+            'service' => [
+                'class' => 'Resources\Ciaone',
+                'params' => [
+                    '@foo',
+                    'foo' => 'bar',
+                    42
+                ]
+            ]
+        ]);
+
+        $this->assertEquals(
+            'Resources\Ciaone',
             get_class($container->get('service'))
         );
     }
