@@ -35,41 +35,43 @@ class Container
         }
     }
 
-    public function get(string $serviceName)
+    private function ensureBuilderIsDefined()
     {
-        $this->ensureServiceIsDefined($serviceName);
-
-        $argument = Objects\Argument::fromString($serviceName);
-        $serviceName = $argument->getServiceName();
-
-        $serviceClass = $this->services[$serviceName]['class'];
-
-        if (!isset($this->services[$serviceName]['params'])) {
-            if (!class_exists($serviceClass)) {
-                throw new \RuntimeException(
-                    'Oops! Class ' . $serviceClass .
-                    ' defined as ' . $serviceName .
-                    ' not exists in ' . var_export($this->services, true)
-                );
-            }
-
-            return new $serviceClass();
-        }
-
         if (!$this->builder) {
             throw new \RuntimeException(
                 'Oops! No builder, no party!'
             );
         }
+    }
 
-        $this->builder->setParams(
-            $this->services[$serviceName]['params']
-        );
+    public function get(string $serviceName)
+    {
+        $this->ensureServiceIsDefined($serviceName);
 
-        return (new ReflectionClass($serviceClass))
-            ->newInstanceArgs(
-                $this->builder->getArguments()
-            );
+        $service = Objects\Service::box([
+            'name' => $serviceName,
+            'services' => $this->services,
+        ]);
+
+        if ($service->isConstructorEmpy()) {
+            if ($service->classNotExists()) {
+                throw new \RuntimeException(
+                    'Oops! Class ' . $service->getClass() .
+                    ' defined as ' . $service->getName()
+                );
+            }
+
+            $serviceClass = $service->getClass();
+
+            return new $serviceClass();
+        }
+
+        $this->ensureBuilderIsDefined();
+
+        $this->builder->setParams($service->getParams());
+
+        return (new ReflectionClass($service->getClass()))
+            ->newInstanceArgs($this->builder->getArguments());
     }
 
     public function contains(string $serviceName)

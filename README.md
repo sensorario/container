@@ -9,9 +9,10 @@ src/
         ├── ArgumentBuilder.php
         ├── Container.php
         └── Objects
-            └── Argument.php
+            ├── Argument.php
+            └── Service.php
 
-3 directories, 3 files
+3 directories, 4 files
 ```
 
 ## Docs
@@ -19,4 +20,3 @@ src/
  - [Basic usage][1]
 
  [1]: doc/basic-usage.md
-
