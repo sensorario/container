@@ -48,6 +48,23 @@ class ContainerTest extends TestCase
         $container->get('foo');
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegexp Oops! Service .* not defined as .*
+     */
+    public function testServiceWithWrongConfiguration()
+    {
+        $container = new Container();
+
+        $container->loadServices([
+            'service' => [
+                'class' => 'Not\Existent\Class',
+            ]
+        ]);
+
+        $container->get('service');
+    }
+
     public function testProvideServiceInstance()
     {
         $container = new Container();
