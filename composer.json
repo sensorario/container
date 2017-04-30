@@ -19,12 +19,6 @@
     "config": {
         "bin-dir": "bin"
     },
-    "authors": [
-        {
-            "name": "Simone Gentili",
-            "email": "sensorario@gmail.com"
-        }
-    ],
     "require-dev": {
         "phpunit/phpunit": "^5.7"
     }
