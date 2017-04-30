@@ -6,7 +6,7 @@
 
 ## Features
 
- - Constructor injection
+ - [Constructor Injection][1]
 
 ## Folding
 
@@ -23,9 +23,5 @@ src/
 
 3 directories, 5 files
 ```
-
-## Docs
-
- - [Constructor Injection][1]
 
  [1]: doc/constructor-injection.md
