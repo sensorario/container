@@ -12,11 +12,12 @@ src/
     └── Container
         ├── ArgumentBuilder.php
         ├── Container.php
-        └── Objects
-            ├── Argument.php
-            └── Service.php
+        ├── Objects
+        │   ├── Argument.php
+        │   └── Service.php
+        └── Resolver.php
 
-3 directories, 4 files
+3 directories, 5 files
 ```
 
 ## Docs
