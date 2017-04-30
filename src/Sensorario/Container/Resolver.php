@@ -15,8 +15,8 @@ class Resolver
         $arguments = $builder->getArguments();
 
         if (!isset($this->instances[$service->getName()])) {
-            $this->instances[$service->getName()] = (new ReflectionClass($service->getClass()))
-                ->newInstanceArgs($arguments);
+            $refObj = new ReflectionClass($service->getClass());
+            $this->instances[$service->getName()] = $refObj->newInstanceArgs($arguments);
         }
 
         return $this->instances[$service->getName()];
