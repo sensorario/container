@@ -8,9 +8,9 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     public function testCanBeDefinedWithZeroServices()
     {
         $container = new Container();
-        $container->loadServices([]);
+        $container->loadServices(array());
         $this->assertEquals(
-            [],
+            array(),
             $container->getServicesConfiguration()
         );
     }
@@ -18,7 +18,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     public function testHasMethodToCheckIfHasService()
     {
         $container = new Container();
-        $container->loadServices([]);
+        $container->loadServices(array());
 
         $this->assertSame(
             false,
@@ -29,7 +29,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     public function testCheckIfAServiceConstructorHasArguments()
     {
         $container = new Container();
-        $container->loadServices([]);
+        $container->loadServices(array());
 
         $this->assertSame(
             false,
@@ -55,11 +55,11 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     {
         $container = new Container();
 
-        $container->loadServices([
-            'service' => [
+        $container->loadServices(array(
+            'service' => array(
                 'class' => 'Not\Existent\Class',
-            ]
-        ]);
+            )
+        ));
 
         $container->get('service');
     }
@@ -67,11 +67,11 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     public function testProvideServiceInstance()
     {
         $container = new Container();
-        $container->loadServices([
-            'service' => [
+        $container->loadServices(array(
+            'service' => array(
                 'class' => 'Foo\Bar',
-            ]
-        ]);
+            )
+        ));
         $this->assertEquals(
             'Foo\Bar',
             get_class($container->get('service'))
@@ -85,15 +85,15 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     public function testCantBuildConstructorWithoutBuilder()
     {
         $container = new Container();
-        $container->loadServices([
-            'service' => [
+        $container->loadServices(array(
+            'service' => array(
                 'class' => 'Foo\Bar',
-                'params' => [
+                'params' => array(
                     'DateTime',
                     'DateInterval'
-                ]
-            ]
-        ]);
+                )
+            )
+        ));
         $this->assertEquals(
             'Foo\Bar',
             get_class($container->get('service'))
@@ -104,19 +104,19 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     {
         $container = new Container();
         $container->setArgumentBuilder(new ArgumentBuilder());
-        $container->loadServices([
-            'foo' => [
+        $container->loadServices(array(
+            'foo' => array(
                 'class' => 'DateTime',
-            ],
-            'service' => [
+            ),
+            'service' => array(
                 'class' => 'Resources\Ciaone',
-                'params' => [
+                'params' => array(
                     '@foo',
                     'foo' => 'bar',
                     42
-                ]
-            ]
-        ]);
+                )
+            )
+        ));
 
         $this->assertEquals(
             'Resources\Ciaone',
@@ -128,19 +128,19 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     {
         $container = new Container();
         $container->setArgumentBuilder(new ArgumentBuilder());
-        $container->loadServices([
-            'foo' => [
+        $container->loadServices(array(
+            'foo' => array(
                 'class' => 'DateTime',
-            ],
-            'service' => [
+            ),
+            'service' => array(
                 'class' => 'Resources\Ciaone',
-                'params' => [
+                'params' => array(
                     '@foo',
                     'foo' => 'bar',
                     42
-                ]
-            ]
-        ]);
+                )
+            )
+        ));
 
         $firstCall = $container->get('service');
         $secondCall = $container->get('service');
