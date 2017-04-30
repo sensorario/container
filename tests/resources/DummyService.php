@@ -10,8 +10,8 @@ class DummyService
 
     public function __construct(
         \DateTime $now,
-        string $foo,
-        int $ciao
+        $foo,
+        $ciao
     ) {
         $this->now = $now;
         $this->foo = $foo;

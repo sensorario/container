@@ -6,12 +6,12 @@ class Argument
 {
     private $name;
 
-    private function __construct(string $name)
+    private function __construct($name)
     {
         $this->name = $name;
     }
 
-    public static function fromString(string $name)
+    public static function fromString($name)
     {
         return new self($name);
     }

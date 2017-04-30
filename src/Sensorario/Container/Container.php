@@ -51,7 +51,7 @@ class Container
         }
     }
 
-    public function get(string $serviceName)
+    public function get($serviceName)
     {
         $this->ensureServiceIsDefined($serviceName);
 
@@ -69,7 +69,7 @@ class Container
         return $this->resolver->resolve($service, $this->builder);
     }
 
-    public function contains(string $serviceName)
+    public function contains($serviceName)
     {
         $service = Objects\Argument::fromString($serviceName);
         return isset($this->services[$service->getServiceName()]);
