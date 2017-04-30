@@ -56,25 +56,28 @@ class Container
         ]);
 
         if ($service->isConstructorEmpty()) {
-            if ($service->classNotExists()) {
-                throw new \RuntimeException(
-                    'Oops! Class ' . $service->getClass() .
-                    ' defined as ' . $service->getName()
-                );
-            }
-
-            $serviceClass = $service->getClass();
-
-            return new $serviceClass();
+            return $this->simpleResolver($service);
         }
 
         $this->ensureBuilderIsDefined();
-
         $this->builder->setParams($service->getParams());
-
         $this->resolve($service);
 
         return $this->instances[$service->getName()];
+    }
+
+    public function simpleResolver($service)
+    {
+        if ($service->classNotExists()) {
+            throw new \RuntimeException(
+                'Oops! Class ' . $service->getClass() .
+                ' defined as ' . $service->getName()
+            );
+        }
+
+        $serviceClass = $service->getClass();
+
+        return new $serviceClass();
     }
 
     private function resolve($service)
