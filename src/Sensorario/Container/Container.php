@@ -10,7 +10,12 @@ class Container
 
     private $builder;
 
-    private $instances = [];
+    private $resolver;
+
+    public function __construct()
+    {
+        $this->resolver = new Resolver();
+    }
 
     public function setArgumentBuilder(ArgumentBuilder $builder)
     {
@@ -56,39 +61,12 @@ class Container
         ]);
 
         if ($service->isConstructorEmpty()) {
-            return $this->simpleResolver($service);
+            return $this->resolver->simpleResolver($service);
         }
 
         $this->ensureBuilderIsDefined();
 
-        return $this->resolve($service, $this->builder);
-    }
-
-    public function simpleResolver($service)
-    {
-        if ($service->classNotExists()) {
-            throw new \RuntimeException(
-                'Oops! Class ' . $service->getClass() .
-                ' defined as ' . $service->getName()
-            );
-        }
-
-        $serviceClass = $service->getClass();
-
-        return new $serviceClass();
-    }
-
-    private function resolve($service, ArgumentBuilder $builder)
-    {
-        $this->builder->setParams($service->getParams());
-        $arguments = $builder->getArguments();
-
-        if (!isset($this->instances[$service->getName()])) {
-            $this->instances[$service->getName()] = (new ReflectionClass($service->getClass()))
-                ->newInstanceArgs($arguments);
-        }
-
-        return $this->instances[$service->getName()];
+        return $this->resolver->resolve($service, $this->builder);
     }
 
     public function contains(string $serviceName)
