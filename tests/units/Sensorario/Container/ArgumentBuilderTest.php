@@ -1,9 +1,8 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use Sensorario\Container\ArgumentBuilder;
 
-class ArgumentBuilderTest extends TestCase
+class ArgumentBuilderTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \RuntimeException

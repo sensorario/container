@@ -1,9 +1,8 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use Sensorario\Container\Objects\Argument;
 
-class ArgumentTest extends TestCase
+class ArgumentTest extends  PHPUnit_Framework_TestCase
 {
     public function test()
     {

@@ -1,10 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use Sensorario\Container\ArgumentBuilder;
 use Sensorario\Container\Container;
 
-class ContainerTest extends TestCase
+class ContainerTest extends PHPUnit_Framework_TestCase
 {
     public function testCanBeDefinedWithZeroServices()
     {
