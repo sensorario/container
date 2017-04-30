@@ -55,10 +55,10 @@ class Container
     {
         $this->ensureServiceIsDefined($serviceName);
 
-        $service = Objects\Service::box([
+        $service = Objects\Service::box(array(
             'name' => $serviceName,
             'services' => $this->services,
-        ]);
+        ));
 
         if ($service->isConstructorEmpty()) {
             return $this->resolver->simpleResolver($service);
