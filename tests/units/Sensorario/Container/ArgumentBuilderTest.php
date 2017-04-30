@@ -25,7 +25,7 @@ class ArgumentBuilderTest extends PHPUnit_Framework_TestCase
         $builder->setContainer($this->container);
         $arguments = $builder->getArguments();
 
-        $this->assertEquals([], $arguments);
+        $this->assertEquals(array(), $arguments);
     }
 
     public function test()
@@ -46,11 +46,11 @@ class ArgumentBuilderTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->fooClass));
 
         $builder = new ArgumentBuilder();
-        $builder->setParams(['@foo']);
+        $builder->setParams(array('@foo'));
         $builder->setContainer($this->container);
 
         $this->assertEquals(
-            [$this->fooClass],
+            array($this->fooClass),
             $builder->getArguments()
         );
     }

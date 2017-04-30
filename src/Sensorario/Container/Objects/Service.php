@@ -18,7 +18,9 @@ class Service
 
     public function getParams()
     {
-        return $this->params['services'][$this->getName()]['params'] ?? [];
+        return isset($this->params['services'][$this->getName()]['params'])
+            ? $this->params['services'][$this->getName()]['params']
+            : array();
     }
 
     public function getClass()
@@ -35,7 +37,7 @@ class Service
 
     public function isConstructorEmpty()
     {
-        return [] == $this->getParams();
+        return array() == $this->getParams();
     }
 
     public function classNotExists()

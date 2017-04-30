@@ -6,7 +6,7 @@ use ReflectionClass;
 
 class Resolver
 {
-    private $instances = [];
+    private $instances = array();
 
     public function resolve($service, ArgumentBuilder $builder)
     {

@@ -6,7 +6,7 @@ class ArgumentBuilder
 {
     private $container;
 
-    private $params = [];
+    private $params = array();
 
     public function setContainer($container)
     {
@@ -20,7 +20,7 @@ class ArgumentBuilder
 
     public function getArguments()
     {
-        $arguments = [];
+        $arguments = array();
 
         if (!$this->container) {
             throw new \RuntimeException(

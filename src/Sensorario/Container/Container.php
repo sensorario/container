@@ -6,7 +6,7 @@ use ReflectionClass;
 
 class Container
 {
-    private $services = [];
+    private $services = array();
 
     private $builder;
 
