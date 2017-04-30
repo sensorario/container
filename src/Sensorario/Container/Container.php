@@ -60,10 +60,8 @@ class Container
         }
 
         $this->ensureBuilderIsDefined();
-        $this->builder->setParams($service->getParams());
-        $this->resolve($service);
 
-        return $this->instances[$service->getName()];
+        return $this->resolve($service, $this->builder);
     }
 
     public function simpleResolver($service)
@@ -80,12 +78,17 @@ class Container
         return new $serviceClass();
     }
 
-    private function resolve($service)
+    private function resolve($service, ArgumentBuilder $builder)
     {
+        $this->builder->setParams($service->getParams());
+        $arguments = $builder->getArguments();
+
         if (!isset($this->instances[$service->getName()])) {
             $this->instances[$service->getName()] = (new ReflectionClass($service->getClass()))
-                ->newInstanceArgs($this->builder->getArguments());
+                ->newInstanceArgs($arguments);
         }
+
+        return $this->instances[$service->getName()];
     }
 
     public function contains(string $serviceName)
