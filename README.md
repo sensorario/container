@@ -22,6 +22,6 @@ src/
 
 ## Docs
 
- - [Basic usage][1]
+ - [Constructor Injection][1]
 
- [1]: doc/basic-usage.md
+ [1]: doc/constructor-injection.md

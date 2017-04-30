@@ -1,4 +1,6 @@
-## Usage
+## Constructor Injection
+
+To inject dependencies via constructor, add arguments to the constructor signature and specify what service or scalar value you want.
 
 ```php
 use Sensorario\Container\Container;
