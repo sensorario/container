@@ -60,22 +60,16 @@ class Container
             'services' => $this->services,
         ));
 
-        if ($service->isMethodInjection()) {
-            return $this->resolver->methods($service);
-        }
-
         if ($service->isConstructorInjection()) {
             $this->ensureBuilderIsDefined();
             return $this->resolver->resolve($service, $this->builder);
-        }
+        } else {
+            if ($service->isMethodInjection()) {
+                return $this->resolver->methods($service);
+            }
 
-        if ($service->isConstructorEmpty()) {
             return $this->resolver->simpleResolver($service);
         }
-
-        throw new \RuntimeException(
-            'Oops!'
-        );
     }
 
     public function contains($serviceName)
