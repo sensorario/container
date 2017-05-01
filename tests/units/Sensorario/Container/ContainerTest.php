@@ -150,4 +150,49 @@ class ContainerTest extends PHPUnit_Framework_TestCase
             $secondCall
         );
     }
+
+    public function testBuildServicesViaMethodInjection()
+    {
+        $container = new Container();
+        $container->setArgumentBuilder(new ArgumentBuilder());
+        $container->loadServices(array(
+            'foo' => array(
+                'class' => 'DateTime',
+            ),
+            'service' => array(
+                'class' => 'DummyMethodService',
+                'methods' => array(
+                    'setFoo' => '@foo',
+                )
+            )
+        ));
+
+        $service = $container->get('service');
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Oops!
+     */
+    public function testInvalidConfiguration()
+    {
+        $container = new Container();
+        $container->setArgumentBuilder(new ArgumentBuilder());
+        $container->loadServices(array(
+            'foo' => array(
+                'class' => 'DateTime',
+            ),
+            'service' => array(
+                'class' => 'DummyMethodService',
+                'methods' => array(
+                    'setFoo' => '@foo',
+                ),
+                'params' => array(
+                    'setFoo' => '@foo',
+                )
+            )
+        ));
+
+        $service = $container->get('service');
+    }
 }

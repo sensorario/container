@@ -7,6 +7,7 @@
 ## Features
 
  - [Constructor Injection][1]
+ - [Method Injection][2]
 
 ## Folding
 
@@ -25,3 +26,4 @@ src/
 ```
 
  [1]: doc/constructor-injection.md
+ [2]: doc/method-injection.md
