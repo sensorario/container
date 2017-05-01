@@ -47,11 +47,6 @@ class Service
         return $this->params['name'];
     }
 
-    public function isConstructorEmpty()
-    {
-        return array() == $this->getParams();
-    }
-
     public function isConstructorInjection()
     {
         return array() == $this->getMethods()
