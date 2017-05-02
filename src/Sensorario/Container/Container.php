@@ -12,9 +12,15 @@ class Container
 
     private $resolver;
 
+    private $construcrtorResolver;
+
     public function __construct()
     {
         $this->resolver = new Resolver();
+
+        $this->resolver->setConstructorResolver(
+            $this->construcrtorResolver = new ConstructorResolver()
+        );
     }
 
     public function setArgumentBuilder(ArgumentBuilder $builder)
@@ -68,7 +74,7 @@ class Container
                 return $this->resolver->methods($service);
             }
 
-            return $this->resolver->simpleResolver($service);
+            return $this->construcrtorResolver->resolve($service);
         }
     }
 

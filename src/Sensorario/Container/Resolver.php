@@ -8,6 +8,13 @@ class Resolver
 {
     private $instances = array();
 
+    private $construcrtorResolver;
+
+    public function setConstructorResolver(ConstructorResolver $resolver)
+    {
+        $this->construcrtorResolver = $resolver;
+    }
+
     public function resolve($service, ArgumentBuilder $builder)
     {
         $builder->setParams($service->getParams());
@@ -22,24 +29,9 @@ class Resolver
         return $this->instances[$service->getName()];
     }
 
-    public function simpleResolver($service)
-    {
-        if ($service->classNotExists()) {
-            throw new \RuntimeException(
-                'Oops! Class ' . $service->getClass() .
-                ' defined as ' . $service->getName() .
-                ' not found!!!'
-            );
-        }
-
-        $serviceClass = $service->getClass();
-
-        return new $serviceClass();
-    }
-
     public function methods($service)
     {
-        $resolution = $this->simpleResolver($service);
+        $resolution = $this->construcrtorResolver->resolve($service);
 
         foreach ($service->getMethods() as $methodName => $value) {
             $argument = Objects\Argument::fromString($value);
@@ -51,7 +43,7 @@ class Resolver
                 ));
 
                 $resolution->$methodName(
-                    $this->simpleResolver($collabortor)
+                    $this->construcrtorResolver->resolve($collabortor)
                 );
             } else {
                 $resolution->$methodName($value);
