@@ -2,8 +2,6 @@
 
 namespace Sensorario\Container;
 
-use ReflectionClass;
-
 class Container
 {
     private $services = array();
@@ -14,6 +12,8 @@ class Container
 
     private $construcrtorResolver;
 
+    private $methodResolver;
+
     public function __construct()
     {
         $this->resolver = new Resolver();
@@ -21,6 +21,8 @@ class Container
         $this->resolver->setConstructorResolver(
             $this->construcrtorResolver = new ConstructorResolver()
         );
+
+        $this->methodResolver = new MethodResolver();
     }
 
     public function setArgumentBuilder(ArgumentBuilder $builder)
@@ -68,7 +70,7 @@ class Container
 
         if ($service->isConstructorInjection()) {
             $this->ensureBuilderIsDefined();
-            return $this->resolver->resolve($service, $this->builder);
+            return $this->methodResolver->resolve($service, $this->builder);
         } else {
             if ($service->isMethodInjection()) {
                 return $this->resolver->methods($service);
