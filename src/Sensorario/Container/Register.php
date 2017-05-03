@@ -7,7 +7,7 @@ use Sensorario\Container\Resolver\ResolverInterface;
 
 class Register
 {
-    private $intances;
+    private $instances = [];
 
     public function has(Service $service)
     {
