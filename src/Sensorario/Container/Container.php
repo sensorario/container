@@ -27,12 +27,13 @@ class Container
         );
 
         $this->methodResolver = new MethodResolver();
-    }
 
-    public function setArgumentBuilder(ArgumentBuilder $builder)
-    {
-        $this->builder = $builder;
+        $this->builder = new ArgumentBuilder();
         $this->builder->setContainer($this);
+
+        $this->methodResolver->setArgumentBuilder(
+            $this->builder
+        );
     }
 
     public function loadServices(array $services)
@@ -54,15 +55,6 @@ class Container
         }
     }
 
-    private function ensureBuilderIsDefined()
-    {
-        if (!$this->builder) {
-            throw new \RuntimeException(
-                'Oops! No builder, no party!'
-            );
-        }
-    }
-
     public function get($serviceName)
     {
         $this->ensureServiceIsDefined($serviceName);
@@ -73,7 +65,6 @@ class Container
         ));
 
         if ($service->isConstructorInjection()) {
-            $this->ensureBuilderIsDefined();
             return $this->methodResolver->resolve($service, $this->builder);
         } else {
             if ($service->isMethodInjection()) {

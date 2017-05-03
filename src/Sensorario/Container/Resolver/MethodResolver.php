@@ -10,15 +10,22 @@ class MethodResolver
 {
     private $instances = array();
 
-    public function resolve(Service $service, ArgumentBuilder $builder)
-    {
-        $builder->setParams($service->getParams());
+    private $builder;
 
-        $arguments = $builder->getArguments();
+    public function setArgumentBuilder(ArgumentBuilder $builder)
+    {
+        $this->builder = $builder;
+    }
+
+    public function resolve(Service $service)
+    {
+        $this->builder->setParams($service->getParams());
+
+        $this->arguments = $this->builder->getArguments();
 
         if (!isset($this->instances[$service->getName()])) {
             $refObj = new ReflectionClass($service->getClass());
-            $this->instances[$service->getName()] = $refObj->newInstanceArgs($arguments);
+            $this->instances[$service->getName()] = $refObj->newInstanceArgs($this->arguments);
         }
 
         return $this->instances[$service->getName()];

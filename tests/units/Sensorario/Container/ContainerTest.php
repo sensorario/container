@@ -78,32 +78,9 @@ class ContainerTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Oops! No builder, no party
-     */
-    public function testCantBuildConstructorWithoutBuilder()
-    {
-        $container = new Container();
-        $container->loadServices(array(
-            'service' => array(
-                'class' => 'Foo\Bar',
-                'params' => array(
-                    'DateTime',
-                    'DateInterval'
-                )
-            )
-        ));
-        $this->assertEquals(
-            'Foo\Bar',
-            get_class($container->get('service'))
-        );
-    }
-
     public function testBuildServicesWithCollaboratorsAndScalarTypes()
     {
         $container = new Container();
-        $container->setArgumentBuilder(new ArgumentBuilder());
         $container->loadServices(array(
             'foo' => array(
                 'class' => 'DateTime',
@@ -127,7 +104,6 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     public function testOnlyInstance()
     {
         $container = new Container();
-        $container->setArgumentBuilder(new ArgumentBuilder());
         $container->loadServices(array(
             'foo' => array(
                 'class' => 'DateTime',
@@ -154,7 +130,6 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     public function testBuildServicesViaMethodInjection()
     {
         $container = new Container();
-        $container->setArgumentBuilder(new ArgumentBuilder());
         $container->loadServices(array(
             'foo' => array(
                 'class' => 'DateTime',
