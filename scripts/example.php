@@ -6,7 +6,6 @@ use Sensorario\Container\Container;
 use Sensorario\Container\ArgumentBuilder;
 
 $container = new Container();
-$container->setArgumentBuilder(new ArgumentBuilder());
 $container->loadServices(array(
     'now' => array(
         'class' => 'DateTime',

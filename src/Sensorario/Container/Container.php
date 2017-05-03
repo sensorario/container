@@ -65,7 +65,7 @@ class Container
         ));
 
         if ($service->isConstructorInjection()) {
-            return $this->methodResolver->resolve($service, $this->builder);
+            return $this->methodResolver->resolve($service);
         } else {
             if ($service->isMethodInjection()) {
                 return $this->resolver->resolve($service);
