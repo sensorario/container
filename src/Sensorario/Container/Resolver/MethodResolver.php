@@ -6,7 +6,8 @@ use ReflectionClass;
 use Sensorario\Container\ArgumentBuilder;
 use Sensorario\Container\Objects\Service;
 
-class MethodResolver
+class MethodResolver implements
+    \Sensorario\Container\Resolver\ResolverInterface
 {
     private $instances = array();
 

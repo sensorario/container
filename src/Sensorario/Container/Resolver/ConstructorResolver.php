@@ -4,7 +4,8 @@ namespace Sensorario\Container\Resolver;
 
 use Sensorario\Container\Objects\Service;
 
-class ConstructorResolver
+class ConstructorResolver implements
+    \Sensorario\Container\Resolver\ResolverInterface
 {
     public function resolve(Service $service)
     {

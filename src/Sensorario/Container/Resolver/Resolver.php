@@ -5,7 +5,8 @@ namespace Sensorario\Container\Resolver;
 use Sensorario\Container\Objects\Service;
 use Sensorario\Container\Objects\Argument;
 
-class Resolver
+class Resolver implements
+    \Sensorario\Container\Resolver\ResolverInterface
 {
     private $construcrtorResolver;
 

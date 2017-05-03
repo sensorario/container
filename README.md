@@ -23,9 +23,10 @@ src/
         └── Resolver
             ├── ConstructorResolver.php
             ├── MethodResolver.php
-            └── Resolver.php
+            ├── Resolver.php
+            └── ResolverInterface.php
 
-4 directories, 7 files
+4 directories, 8 files
 ```
 
  [1]: doc/constructor-injection.md
