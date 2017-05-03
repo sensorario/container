@@ -16,16 +16,26 @@ class Service
         return new self($params);
     }
 
+    public function hasParams()
+    {
+        return isset($this->params['services'][$this->getName()]['params']);
+    }
+
     public function getParams()
     {
-        return isset($this->params['services'][$this->getName()]['params'])
+        return $this->hasParams()
             ? $this->params['services'][$this->getName()]['params']
             : array();
     }
 
+    public function hasMethods()
+    {
+        return isset($this->params['services'][$this->getName()]['methods']);
+    }
+
     public function getMethods()
     {
-        return isset($this->params['services'][$this->getName()]['methods'])
+        return $this->hasMethods()
             ? $this->params['services'][$this->getName()]['methods']
             : array();
     }
