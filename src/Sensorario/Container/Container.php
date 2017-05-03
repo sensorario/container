@@ -22,11 +22,12 @@ class Container
 
     public function __construct()
     {
-        $this->resolver = new Resolver();
+        $this->register = new Register();
 
-        $this->resolver->setConstructorResolver(
-            $this->construcrtorResolver = new ConstructorResolver()
-        );
+        $this->construcrtorResolver = new ConstructorResolver();
+
+        $this->resolver = new Resolver();
+        $this->resolver->setConstructorResolver($this->construcrtorResolver);
 
         $this->methodResolver = new MethodResolver();
 
@@ -66,15 +67,19 @@ class Container
             'services' => $this->services,
         ));
 
-        if ($service->isConstructorInjection()) {
-            return $this->methodResolver->resolve($service);
-        } else {
-            if ($service->isMethodInjection()) {
-                return $this->resolver->resolve($service);
+        if (!$this->register->has($service)) {
+            if ($service->isConstructorInjection()) {
+                $this->register->register($service, $this->methodResolver);
+            } else {
+                if ($service->isMethodInjection()) {
+                    $this->register->register($service, $this->resolver);
+                } else {
+                    $this->register->register($service, $this->construcrtorResolver);
+                }
             }
-
-            return $this->construcrtorResolver->resolve($service);
         }
+
+        return $this->register->get($service);
     }
 
     public function contains($serviceName)

@@ -2,8 +2,8 @@
 
 namespace Sensorario\Container\Resolver;
 
-use Sensorario\Container\Objects\Service;
 use Sensorario\Container\Objects\Argument;
+use Sensorario\Container\Objects\Service;
 
 class Resolver implements
     \Sensorario\Container\Resolver\ResolverInterface

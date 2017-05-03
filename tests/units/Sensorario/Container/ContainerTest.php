@@ -144,4 +144,28 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 
         $service = $container->get('service');
     }
+
+    public function testBuildServicesViaMethodInjectionSame()
+    {
+        $container = new Container();
+        $container->loadServices(array(
+            'foo' => array(
+                'class' => 'DateTime',
+            ),
+            'service' => array(
+                'class' => 'DummyMethodService',
+                'methods' => array(
+                    'setFoo' => '@foo',
+                )
+            )
+        ));
+
+        $service = $container->get('service');
+        $service2 = $container->get('service');
+
+        $this->assertSame(
+            $service,
+            $service2
+        );
+    }
 }

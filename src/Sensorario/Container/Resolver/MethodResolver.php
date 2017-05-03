@@ -9,8 +9,6 @@ use Sensorario\Container\Objects\Service;
 class MethodResolver implements
     \Sensorario\Container\Resolver\ResolverInterface
 {
-    private $instances = array();
-
     private $builder;
 
     public function setArgumentBuilder(ArgumentBuilder $builder)
@@ -24,11 +22,8 @@ class MethodResolver implements
 
         $arguments = $this->builder->getArguments();
 
-        if (!isset($this->instances[$service->getName()])) {
-            $refObj = new ReflectionClass($service->getClass());
-            $this->instances[$service->getName()] = $refObj->newInstanceArgs($arguments);
-        }
+        $refObj = new ReflectionClass($service->getClass());
 
-        return $this->instances[$service->getName()];
+        return $refObj->newInstanceArgs($arguments);
     }
 }
