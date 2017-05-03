@@ -1,32 +1,28 @@
 <?php
 
-namespace Sensorario\Container;
+namespace Sensorario\Container\Resolver;
+
+use Sensorario\Container\Objects\Service;
+use Sensorario\Container\Objects\Argument;
 
 class Resolver
 {
     private $construcrtorResolver;
-
-    private $methodResolver;
 
     public function setConstructorResolver(ConstructorResolver $resolver)
     {
         $this->construcrtorResolver = $resolver;
     }
 
-    public function setMethodResolver(MethodResolver $resolver)
-    {
-        $this->methodResolver = $resolver;
-    }
-
-    public function methods($service)
+    public function resolve(Service $service)
     {
         $resolution = $this->construcrtorResolver->resolve($service);
 
         foreach ($service->getMethods() as $methodName => $value) {
-            $argument = Objects\Argument::fromString($value);
+            $argument = Argument::fromString($value);
 
             if ($argument->isService()) {
-                $collabortor = Objects\Service::box(array(
+                $collabortor = Service::box(array(
                     'name' => $argument->getServiceName(),
                     'services' => $service->getServicesConfiguration(),
                 ));

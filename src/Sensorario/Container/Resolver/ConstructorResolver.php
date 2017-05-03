@@ -1,10 +1,12 @@
 <?php
 
-namespace Sensorario\Container;
+namespace Sensorario\Container\Resolver;
+
+use Sensorario\Container\Objects\Service;
 
 class ConstructorResolver
 {
-    public function resolve(Objects\Service $service)
+    public function resolve(Service $service)
     {
         if ($service->classNotExists()) {
             throw new \RuntimeException(

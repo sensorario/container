@@ -2,6 +2,10 @@
 
 namespace Sensorario\Container;
 
+use Sensorario\Container\Resolver\ConstructorResolver;
+use Sensorario\Container\Resolver\MethodResolver;
+use Sensorario\Container\Resolver\Resolver;
+
 class Container
 {
     private $services = array();
@@ -73,7 +77,7 @@ class Container
             return $this->methodResolver->resolve($service, $this->builder);
         } else {
             if ($service->isMethodInjection()) {
-                return $this->resolver->methods($service);
+                return $this->resolver->resolve($service);
             }
 
             return $this->construcrtorResolver->resolve($service);

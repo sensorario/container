@@ -1,14 +1,16 @@
 <?php
 
-namespace Sensorario\Container;
+namespace Sensorario\Container\Resolver;
 
 use ReflectionClass;
+use Sensorario\Container\ArgumentBuilder;
+use Sensorario\Container\Objects\Service;
 
 class MethodResolver
 {
     private $instances = array();
 
-    public function resolve($service, ArgumentBuilder $builder)
+    public function resolve(Service $service, ArgumentBuilder $builder)
     {
         $builder->setParams($service->getParams());
 
