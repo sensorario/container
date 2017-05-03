@@ -22,11 +22,11 @@ class MethodResolver implements
     {
         $this->builder->setParams($service->getParams());
 
-        $this->arguments = $this->builder->getArguments();
+        $arguments = $this->builder->getArguments();
 
         if (!isset($this->instances[$service->getName()])) {
             $refObj = new ReflectionClass($service->getClass());
-            $this->instances[$service->getName()] = $refObj->newInstanceArgs($this->arguments);
+            $this->instances[$service->getName()] = $refObj->newInstanceArgs($arguments);
         }
 
         return $this->instances[$service->getName()];
