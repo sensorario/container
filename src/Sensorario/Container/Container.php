@@ -2,6 +2,8 @@
 
 namespace Sensorario\Container;
 
+use Sensorario\Container\Objects\Argument;
+use Sensorario\Container\Objects\Service;
 use Sensorario\Container\Resolver\ConstructorResolver;
 use Sensorario\Container\Resolver\MethodResolver;
 use Sensorario\Container\Resolver\Resolver;
@@ -59,7 +61,7 @@ class Container
     {
         $this->ensureServiceIsDefined($serviceName);
 
-        $service = Objects\Service::box(array(
+        $service = Service::box(array(
             'name' => $serviceName,
             'services' => $this->services,
         ));
@@ -77,7 +79,7 @@ class Container
 
     public function contains($serviceName)
     {
-        $service = Objects\Argument::fromString($serviceName);
+        $service = Argument::fromString($serviceName);
         return isset($this->services[$service->getServiceName()]);
     }
 
