@@ -20,9 +20,12 @@ src/
         ├── Objects
         │   ├── Argument.php
         │   └── Service.php
-        └── Resolver.php
+        └── Resolver
+            ├── ConstructorResolver.php
+            ├── MethodResolver.php
+            └── Resolver.php
 
-3 directories, 5 files
+4 directories, 7 files
 ```
 
  [1]: doc/constructor-injection.md
