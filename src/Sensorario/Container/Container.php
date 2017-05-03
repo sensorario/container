@@ -68,18 +68,26 @@ class Container
         ));
 
         if (!$this->register->has($service)) {
-            if ($service->isConstructorInjection()) {
-                $this->register->register($service, $this->methodResolver);
-            } else {
-                if ($service->isMethodInjection()) {
-                    $this->register->register($service, $this->resolver);
-                } else {
-                    $this->register->register($service, $this->construcrtorResolver);
-                }
-            }
+            $this->register->register(
+                $service,
+                $this->getResolver($service)
+            );
         }
 
         return $this->register->get($service);
+    }
+
+    public function getResolver(Service $service)
+    {
+        if ($service->hasMethodInjection()) {
+            return $this->methodResolver;
+        }
+
+        if ($service->hasSimpleInjection()) {
+            return $this->resolver;
+        }
+
+        return $this->construcrtorResolver;
     }
 
     public function contains($serviceName)

@@ -47,13 +47,13 @@ class Service
         return $this->params['name'];
     }
 
-    public function isConstructorInjection()
+    public function hasMethodInjection()
     {
         return array() == $this->getMethods()
             && array() != $this->getParams();
     }
 
-    public function isMethodInjection()
+    public function hasSimpleInjection()
     {
         return array() != $this->getMethods()
             && array() == $this->getParams();
