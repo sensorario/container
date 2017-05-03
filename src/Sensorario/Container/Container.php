@@ -20,6 +20,8 @@ class Container
 
     private $methodResolver;
 
+    private $register;
+
     public function __construct()
     {
         $this->register = new Register();
