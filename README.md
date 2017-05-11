@@ -9,6 +9,10 @@
  - [Constructor Injection][1]
  - [Method Injection][2]
 
+## Suggestions
+
+ - implement your own [Container Loader][3]
+
 ## Folding
 
 ```
@@ -32,3 +36,4 @@ src/
 
  [1]: doc/constructor-injection.md
  [2]: doc/method-injection.md
+ [3]: doc/container-loader.md
