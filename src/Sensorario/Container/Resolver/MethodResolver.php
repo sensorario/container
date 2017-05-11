@@ -11,7 +11,7 @@ class MethodResolver implements
 {
     private $builder;
 
-    public function setArgumentBuilder(ArgumentBuilder $builder)
+    public function setArgumentBuilder(ArgumentBuilder $builder) : void
     {
         $this->builder = $builder;
     }

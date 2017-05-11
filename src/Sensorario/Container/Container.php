@@ -10,7 +10,7 @@ use Sensorario\Container\Resolver\Resolver;
 
 class Container
 {
-    private $services = array();
+    private $services = [];
 
     private $builder;
 
@@ -41,33 +41,35 @@ class Container
         );
     }
 
-    public function loadServices(array $services)
+    public function loadServices(array $services) : void
     {
         $this->services = $services;
     }
 
-    public function getServicesConfiguration()
+    public function getServicesConfiguration() : array
     {
         return $this->services;
     }
 
-    private function ensureServiceIsDefined($serviceName)
+    private function ensureServiceIsDefined(string $serviceName) : bool
     {
         if (!$this->contains($serviceName)) {
             throw new \RuntimeException(
                 'Oops! Service ' . $serviceName . ' not defined'
             );
         }
+
+        return true;
     }
 
-    public function get($serviceName)
+    public function get(string $serviceName)
     {
         $this->ensureServiceIsDefined($serviceName);
 
-        $service = Service::box(array(
+        $service = Service::box([
             'name' => $serviceName,
             'services' => $this->services,
-        ));
+        ]);
 
         if (!$this->register->has($service)) {
             $this->register->register(
@@ -92,13 +94,13 @@ class Container
         return $this->construcrtorResolver;
     }
 
-    public function contains($serviceName)
+    public function contains(string $serviceName) : bool
     {
         $service = Argument::fromString($serviceName);
         return isset($this->services[$service->getServiceName()]);
     }
 
-    public function hasArguments($serviceName)
+    public function hasArguments(string $serviceName) : bool
     {
         return isset($this->services[$serviceName]['params']);
     }
