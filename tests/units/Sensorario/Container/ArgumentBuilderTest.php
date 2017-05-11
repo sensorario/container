@@ -2,7 +2,7 @@
 
 use Sensorario\Container\ArgumentBuilder;
 
-class ArgumentBuilderTest extends PHPUnit_Framework_TestCase
+class ArgumentBuilderTest extends PHPUnit\Framework\TestCase
 {
     /**
      * @expectedException \RuntimeException

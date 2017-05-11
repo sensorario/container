@@ -2,7 +2,7 @@
 
 use Sensorario\Container\Objects\Argument;
 
-class ArgumentTest extends  PHPUnit_Framework_TestCase
+class ArgumentTest extends  PHPUnit\Framework\TestCase
 {
     public function test()
     {
