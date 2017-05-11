@@ -10,7 +10,7 @@ class Resolver implements
 {
     private $construcrtorResolver;
 
-    public function setConstructorResolver(ConstructorResolver $resolver)
+    public function setConstructorResolver(ConstructorResolver $resolver) : void
     {
         $this->construcrtorResolver = $resolver;
     }
@@ -23,10 +23,10 @@ class Resolver implements
             $argument = Argument::fromString($value);
 
             if ($argument->isService()) {
-                $collabortor = Service::box(array(
+                $collabortor = Service::box([
                     'name' => $argument->getServiceName(),
                     'services' => $service->getServicesConfiguration(),
-                ));
+                ]);
 
                 $resolution->$methodName(
                     $this->construcrtorResolver->resolve($collabortor)

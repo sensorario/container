@@ -6,21 +6,21 @@ class ArgumentBuilder
 {
     private $container;
 
-    private $params = array();
+    private $params = [];
 
-    public function setContainer($container)
+    public function setContainer(Container $container) : void
     {
         $this->container = $container;
     }
 
-    public function setParams(array $params)
+    public function setParams(array $params) : void
     {
         $this->params = $params;
     }
 
-    public function getArguments()
+    public function getArguments() : array
     {
-        $arguments = array();
+        $arguments = [];
 
         if (!$this->container) {
             throw new \RuntimeException(

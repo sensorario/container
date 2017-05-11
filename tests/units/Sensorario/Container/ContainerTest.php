@@ -3,7 +3,7 @@
 use Sensorario\Container\ArgumentBuilder;
 use Sensorario\Container\Container;
 
-class ContainerTest extends PHPUnit_Framework_TestCase
+class ContainerTest extends PHPUnit\Framework\TestCase
 {
     public function testCanBeDefinedWithZeroServices()
     {
@@ -143,6 +143,8 @@ class ContainerTest extends PHPUnit_Framework_TestCase
         ));
 
         $service = $container->get('service');
+
+        $this->assertInstanceOf(DummyMethodService::class, $service);
     }
 
     public function testBuildServicesViaMethodInjectionSame()
