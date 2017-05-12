@@ -14,7 +14,7 @@ class Register
         return isset($this->instances[$service->getName()]);
     }
 
-    public function register(Service $service, ResolverInterface $resolver)
+    public function store(Service $service, ResolverInterface $resolver)
     {
         $this->instances[$service->getName()] = $resolver->resolve($service);
     }

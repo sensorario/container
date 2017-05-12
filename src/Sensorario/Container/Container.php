@@ -72,7 +72,7 @@ class Container
         ]);
 
         if (!$this->register->has($service)) {
-            $this->register->register(
+            $this->register->store(
                 $service,
                 $this->getResolver($service)
             );
