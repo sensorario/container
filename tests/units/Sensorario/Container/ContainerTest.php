@@ -5,35 +5,37 @@ use Sensorario\Container\Container;
 
 class ContainerTest extends PHPUnit\Framework\TestCase
 {
+    public function setUp()
+    {
+        $this->container = new Container();
+    }
+
     public function testCanBeDefinedWithZeroServices()
     {
-        $container = new Container();
-        $container->loadServices(array());
+        $this->container->loadServices(array());
         $this->assertEquals(
             array(),
-            $container->getServicesConfiguration()
+            $this->container->getServicesConfiguration()
         );
     }
 
     public function testHasMethodToCheckIfHasService()
     {
-        $container = new Container();
-        $container->loadServices(array());
+        $this->container->loadServices(array());
 
         $this->assertSame(
             false,
-            $container->contains('service-name')
+            $this->container->contains('service-name')
         );
     }
 
     public function testCheckIfAServiceConstructorHasArguments()
     {
-        $container = new Container();
-        $container->loadServices(array());
+        $this->container->loadServices(array());
 
         $this->assertSame(
             false,
-            $container->hasArguments('service-name')
+            $this->container->hasArguments('service-name')
         );
     }
 
@@ -43,8 +45,7 @@ class ContainerTest extends PHPUnit\Framework\TestCase
      */
     public function testThrowAnExceptionWhenRequestedServiceIsNotDefined()
     {
-        $container = new Container();
-        $container->get('foo');
+        $this->container->get('foo');
     }
 
     /**
@@ -53,35 +54,32 @@ class ContainerTest extends PHPUnit\Framework\TestCase
      */
     public function testServiceWithWrongConfiguration()
     {
-        $container = new Container();
-
-        $container->loadServices(array(
+        $this->container->loadServices(array(
             'service' => array(
                 'class' => 'Not\Existent\Class',
             )
         ));
 
-        $container->get('service');
+        $this->container->get('service');
     }
 
     public function testProvideServiceInstance()
     {
-        $container = new Container();
-        $container->loadServices(array(
+        $this->container->loadServices(array(
             'service' => array(
-                'class' => 'Foo\Bar',
+                'class' => 'Foo\Foo\Bar',
             )
         ));
+
         $this->assertEquals(
-            'Foo\Bar',
-            get_class($container->get('service'))
+            'Foo\Foo\Bar',
+            get_class($this->container->get('service'))
         );
     }
 
     public function testBuildServicesWithCollaboratorsAndScalarTypes()
     {
-        $container = new Container();
-        $container->loadServices(array(
+        $this->container->loadServices(array(
             'foo' => array(
                 'class' => 'DateTime',
             ),
@@ -97,14 +95,13 @@ class ContainerTest extends PHPUnit\Framework\TestCase
 
         $this->assertEquals(
             'Resources\Ciaone',
-            get_class($container->get('service'))
+            get_class($this->container->get('service'))
         );
     }
 
     public function testOnlyInstance()
     {
-        $container = new Container();
-        $container->loadServices(array(
+        $this->container->loadServices(array(
             'foo' => array(
                 'class' => 'DateTime',
             ),
@@ -118,8 +115,8 @@ class ContainerTest extends PHPUnit\Framework\TestCase
             )
         ));
 
-        $firstCall = $container->get('service');
-        $secondCall = $container->get('service');
+        $firstCall = $this->container->get('service');
+        $secondCall = $this->container->get('service');
 
         $this->assertSame(
             $firstCall,
@@ -129,8 +126,8 @@ class ContainerTest extends PHPUnit\Framework\TestCase
 
     public function testBuildServicesViaMethodInjection()
     {
-        $container = new Container();
-        $container->loadServices(array(
+        $this->container = new Container();
+        $this->container->loadServices(array(
             'foo' => array(
                 'class' => 'DateTime',
             ),
@@ -142,15 +139,15 @@ class ContainerTest extends PHPUnit\Framework\TestCase
             )
         ));
 
-        $service = $container->get('service');
+        $service = $this->container->get('service');
 
         $this->assertInstanceOf(DummyMethodService::class, $service);
     }
 
     public function testBuildServicesViaMethodInjectionSame()
     {
-        $container = new Container();
-        $container->loadServices(array(
+        $this->container = new Container();
+        $this->container->loadServices(array(
             'foo' => array(
                 'class' => 'DateTime',
             ),
@@ -162,8 +159,8 @@ class ContainerTest extends PHPUnit\Framework\TestCase
             )
         ));
 
-        $service = $container->get('service');
-        $service2 = $container->get('service');
+        $service = $this->container->get('service');
+        $service2 = $this->container->get('service');
 
         $this->assertSame(
             $service,
