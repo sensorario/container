@@ -17,7 +17,7 @@ class ArgumentBuilderTest extends PHPUnit\Framework\TestCase
     public function testCreateEmptyCollectionOfCollaboratorsByDefault()
     {
         $this->container = $this
-            ->getMockBuilder('Sensorario\Container\Container')
+            ->getMockBuilder('Psr\Container\ContainerInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -31,7 +31,7 @@ class ArgumentBuilderTest extends PHPUnit\Framework\TestCase
     public function test()
     {
         $this->container = $this
-            ->getMockBuilder('Sensorario\Container\Container')
+            ->getMockBuilder('Psr\Container\ContainerInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
