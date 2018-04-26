@@ -99,7 +99,7 @@ class ContainerTest extends PHPUnit\Framework\TestCase
         );
     }
 
-    public function testOnlyInstance()
+    public function testKeepJustOneInstaceOfService()
     {
         $this->container->loadServices(array(
             'foo' => array(

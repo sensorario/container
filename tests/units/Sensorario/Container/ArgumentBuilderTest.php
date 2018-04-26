@@ -4,38 +4,36 @@ use Sensorario\Container\ArgumentBuilder;
 
 class ArgumentBuilderTest extends PHPUnit\Framework\TestCase
 {
+    public function setUp()
+    {
+        $this->container = $this
+            ->getMockBuilder('Psr\Container\ContainerInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->builder = new ArgumentBuilder();
+    }
+
     /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Oops! Container is not defined
      */
     public function testCantBuildArgumentsWithoutContainer()
     {
-        $builder = new ArgumentBuilder();
-        $arguments = $builder->getArguments();
+        $arguments = $this->builder->getArguments();
     }
 
     public function testCreateEmptyCollectionOfCollaboratorsByDefault()
     {
-        $this->container = $this
-            ->getMockBuilder('Psr\Container\ContainerInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $builder = new ArgumentBuilder();
-        $builder->setContainer($this->container);
-        $arguments = $builder->getArguments();
+        $this->builder->setContainer($this->container);
+        $arguments = $this->builder->getArguments();
 
         $this->assertEquals(array(), $arguments);
     }
 
-    public function test()
+    public function testProvideCollectionOfArguments()
     {
-        $this->container = $this
-            ->getMockBuilder('Psr\Container\ContainerInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->fooClass = $this
+        $this->serviceClass = $this
             ->getMockBuilder('Foo\Bar')
             ->disableOriginalConstructor()
             ->getMock();
@@ -43,15 +41,14 @@ class ArgumentBuilderTest extends PHPUnit\Framework\TestCase
         $this->container->expects($this->once())
             ->method('get')
             ->with('@foo')
-            ->will($this->returnValue($this->fooClass));
+            ->will($this->returnValue($this->serviceClass));
 
-        $builder = new ArgumentBuilder();
-        $builder->setParams(array('@foo'));
-        $builder->setContainer($this->container);
+        $this->builder->setParams(array('@foo'));
+        $this->builder->setContainer($this->container);
 
         $this->assertEquals(
-            array($this->fooClass),
-            $builder->getArguments()
+            array($this->serviceClass),
+            $this->builder->getArguments()
         );
     }
 }

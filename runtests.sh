@@ -1,2 +1,2 @@
 #!/bin/bash
-./bin/phpunit --stop-on-failure --color
+./bin/phpunit --testdox --stop-on-failure --color
