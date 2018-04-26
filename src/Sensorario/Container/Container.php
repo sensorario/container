@@ -8,7 +8,7 @@ use Sensorario\Container\Resolver\ConstructorResolver;
 use Sensorario\Container\Resolver\MethodResolver;
 use Sensorario\Container\Resolver\Resolver;
 
-class Container
+class Container implements \Psr\Container\ContainerInterface
 {
     private $services = [];
 
@@ -62,7 +62,7 @@ class Container
         return true;
     }
 
-    public function get(string $serviceName)
+    public function get($serviceName)
     {
         $this->ensureServiceIsDefined($serviceName);
 
@@ -92,6 +92,11 @@ class Container
         }
 
         return $this->construcrtorResolver;
+    }
+
+    public function has($id)
+    {
+        return $this->contains($id);
     }
 
     public function contains(string $serviceName) : bool

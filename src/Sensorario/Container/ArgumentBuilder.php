@@ -2,13 +2,15 @@
 
 namespace Sensorario\Container;
 
+use Psr\Container\ContainerInterface;
+
 class ArgumentBuilder
 {
     private $container;
 
     private $params = [];
 
-    public function setContainer(Container $container) : void
+    public function setContainer(ContainerInterface $container) : void
     {
         $this->container = $container;
     }
